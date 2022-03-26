@@ -4,7 +4,6 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QDebug>
-#include <QDesktopWidget>
 #include <QFontDialog>
 #include <QKeyEvent>
 #include <QMimeData>
@@ -1738,7 +1737,7 @@ QVariant Shell::inputMethodQuery(Qt::InputMethodQuery query) const
 {
 	if ( query == Qt::ImFont) {
 		return font();
-	} else if ( query == Qt::ImMicroFocus || query == Qt::ImCursorRectangle ) {
+	} else if ( query == Qt::ImCursorRectangle || query == Qt::ImCursorRectangle ) {
 		return QRect(neovimCursorTopLeft(), cellSize());
 	}
 

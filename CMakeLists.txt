@@ -20,7 +20,7 @@ option(ENABLE_TIDY "Build with Clang Tidy Linter" OFF)
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR
 		"${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wno-unused-parameter -Wunused-variable -std=c++11")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wno-unused-parameter -Wunused-variable -Wfatal-errors -std=c++17")
 
 	# Qt Static Analysis - Clang-Tidy based extension
 	if(ENABLE_CLAZY)
@@ -132,14 +132,15 @@ include(MacOSXPaths)
 
 # Qt
 set(CMAKE_AUTOMOC ON)
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Network REQUIRED)
-find_package(Qt5Svg REQUIRED)
-find_package(Qt5Test REQUIRED)
-find_package(Qt5Widgets REQUIRED)
+find_package(Qt6 COMPONENTS Core REQUIRED)
+find_package(Qt6 COMPONENTS Core5Compat REQUIRED)
+find_package(Qt6 COMPONENTS Widgets REQUIRED)
+find_package(Qt6 COMPONENTS SvgWidgets REQUIRED)
+find_package(Qt6 COMPONENTS Network REQUIRED)
+find_package(Qt6 REQUIRED COMPONENTS Test)
 
-if(Qt5Core_VERSION VERSION_LESS 5.8)
-	message(FATAL_ERROR "Minimum supported Qt5 version is 5.8!")
+if(Qt6Core_VERSION VERSION_LESS 6.2)
+	message(FATAL_ERROR "Minimum supported Qt6 version is 6.2!")
 endif()
 
 # msgpack
@@ -174,7 +175,7 @@ endif()
 add_subdirectory(src)
 add_subdirectory(doc)
 
-option(ENABLE_TESTS "Build tests" ON)
+option(ENABLE_TESTS "Build tests" OFF)
 if(ENABLE_TESTS)
 	enable_testing()
 	add_subdirectory(test)

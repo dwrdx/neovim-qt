@@ -22,6 +22,6 @@ if(WIN32)
 endif()
 
 add_library(neovim-qt STATIC ${NEOVIM_QT_SOURCES})
-target_link_libraries(neovim-qt Qt5::Network ${MSGPACK_LIBRARIES})
+target_link_libraries(neovim-qt Qt6::Network Qt6::Core5Compat ${MSGPACK_LIBRARIES})
 
 add_subdirectory(gui)

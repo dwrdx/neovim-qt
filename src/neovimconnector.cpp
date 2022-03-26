@@ -88,11 +88,12 @@ QString NeovimConnector::errorString()
 
 QString NeovimConnector::connectionDescription()
 {
+    QString port = QString::number(m_connPort);
 	switch (m_ctype) {
 		case SpawnedConnection:
 			return m_spawnExe + " " + m_spawnArgs.join(" ");
 		case HostConnection:
-			return m_connHost + ":" + m_connPort;
+			return m_connHost + ":" + port;
 		case SocketConnection:
 			return m_connSocket;
 		default:
@@ -373,7 +374,7 @@ NeovimConnector* NeovimConnector::connectToNeovim(const QString& server)
 	int colon_pos = addr.lastIndexOf(':');
 	if (colon_pos != -1 && colon_pos != 0 && addr[colon_pos-1] != ':') {
 		bool ok;
-		int port = addr.midRef(colon_pos+1).toInt(&ok);
+		int port = addr.mid(colon_pos+1).toInt(&ok);
 		if (ok) {
 			QString host = addr.mid(0, colon_pos);
 			return connectToHost(host, port);

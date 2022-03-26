@@ -4,3 +4,4 @@ src/gui/runtime/doc/tags
 third-party/msgpack*
 compile_commands.json
 !.github
+*.ps1
